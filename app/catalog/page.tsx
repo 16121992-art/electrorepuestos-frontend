@@ -1,14 +1,12 @@
-import ProductCard from '@/components/ProductCard';
+// app/catalog/page.tsx
 
-export default async function ProductosPage() {
-  const res = await fetch('http://localhost:4000/api/products');
-  const products = await res.json();
+import Algo from '@/components/Algo';
 
+export default function HomePage() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {products.map((product: any) => (
-        <ProductCard key={product._id} product={product} />
-      ))}
-    </div>
+    <main className="p-4">
+      <h1 className="text-2xl font-semibold mb-4">📚 Catálogo de Productos</h1>
+      <Algo />
+    </main>
   );
 }

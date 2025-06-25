@@ -1,9 +1,11 @@
-// app/page.tsx
+// app/page.tsx o app/catalog/page.tsx
+'use client';
+
 import ProductCard from '@/components/ProductCard';
 
-export default async function HomePage() {
+export default async function CatalogPage() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
-  const res = await fetch(`${baseUrl}/api/products`);
+  const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' });
   const products = await res.json();
 
   return (
