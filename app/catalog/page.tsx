@@ -1,12 +1,33 @@
-// app/catalog/page.tsx
+'use client'
 
-import Algo from '@/components/Algo';
+import { useEffect, useState } from 'react'
+import ProductCard from '@/components/ProductCard'
 
-export default function HomePage() {
+export default function CatalogPage() {
+  const [products, setProducts] = useState<any[]>([])
+  const [error, setError] = useState<string | null>(null)
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch(`${baseUrl}/api/products`)
+        const data = await res.json()
+        setProducts(data)
+      } catch (err: any) {
+        setError('No se pudo cargar el catálogo')
+      }
+    }
+    fetchProducts()
+  }, [])
+
+  if (error) return <div className="text-red-500">{error}</div>
+
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">📚 Catálogo de Productos</h1>
-      <Algo />
-    </main>
-  );
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {products.map((product) => (
+        <ProductCard key={product._id} product={product} />
+      ))}
+    </div>
+  )
 }
