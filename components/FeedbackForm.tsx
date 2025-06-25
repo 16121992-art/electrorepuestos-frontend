@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 interface FeedbackFormProps {
   productId: string
-  userId: string
+  userId?: string
 }
 
 export default function FeedbackForm({ productId, userId }: FeedbackFormProps) {
@@ -12,34 +12,39 @@ export default function FeedbackForm({ productId, userId }: FeedbackFormProps) {
   const [comment, setComment] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  e.preventDefault()
 
-    const feedback = {
-      productId,
-      userId,
-      rating,
-      comment,
-    }
-
-    try {
-      const res = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(feedback),
-      })
-
-      if (res.ok) {
-        alert('¡Gracias por tu feedback!')
-        setComment('')
-        setRating(5)
-      } else {
-        alert('Error al enviar feedback')
-      }
-    } catch (err) {
-      console.error('Error al enviar feedback', err)
-    }
+  if (!userId) {
+    alert('Debes iniciar sesión para dejar un comentario.')
+    return
   }
 
+  const feedback = {
+    productId,
+    userId,
+    rating,
+    comment,
+  }
+
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(feedback),
+    })
+
+    if (res.ok) {
+      alert('¡Gracias por tu feedback!')
+      setComment('')
+      setRating(5)
+    } else {
+      alert('Error al enviar feedback')
+    }
+  } catch (err) {
+    console.error('Error al enviar feedback', err)
+  }
+}
+  
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded space-y-4">
       <h2 className="text-lg font-bold">Califica tu compra</h2>

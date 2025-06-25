@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import ChatBox from '@/components/ChatBox'
-import FeedbackForm from '@/components/FeedbackForm'
+import FeedbackForm from "@/components/FeedbackForm";
+import FeedbackWrapper from '@/components/FeedbackWrapper'
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<any>(null)
@@ -52,7 +53,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         <ChatBox userId={userId} otherUserId={product.sellerId} />
       )}
 
-      <FeedbackForm productId={product._id} userId={userId} />
+      <FeedbackForm productId={product.id} userId={userId} />
     </div>
   )
 }
