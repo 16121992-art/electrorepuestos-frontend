@@ -1,18 +1,12 @@
-// app/page.tsx o app/catalog/page.tsx
-'use client';
+// app/page.tsx
 
-import ProductCard from '@/components/ProductCard';
+import Algo from '@/components/Algo';
 
-export default async function CatalogPage() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
-  const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' });
-  const products = await res.json();
-
+export default function HomePage() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {products.map((product: any) => (
-        <ProductCard key={product._id} product={product} />
-      ))}
-    </div>
+    <main className="p-4">
+      <h1 className="text-3xl font-bold mb-6">🚗 Bienvenido a ElectroRepuestos</h1>
+      <Algo />
+    </main>
   );
 }
